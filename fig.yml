@@ -1,0 +1,22 @@
+---
+master:
+    image: joaodubas/jenkins:latest
+    volumes:
+        - ./home-master:/var/jenkins_home
+        - /usr/bin/docker:/usr/bin/docker
+        - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+        TERM: xterm
+    ports:
+        - "8000:8080"
+
+slave:
+    image: joaodubas/jenkins-slave:latest
+    volumes:
+        - ./home-slave:/home/jenkins-slave
+        - /usr/bin/docker:/usr/bin/docker
+        - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+        TERM: xterm
+    links:
+        master:jenkins
